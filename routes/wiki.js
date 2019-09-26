@@ -9,8 +9,10 @@ then(() => {
   console.log('(wiki) Connected to the database!');
 })
 
-router.get("/", (req,res,next)=>{
-  res.send(main());
+router.get("/", async (req,res,next)=>{
+  const pages = await Page.findAll();
+  console.log('pages: ', pages);
+  res.send(main(pages));
   next();
 })
 
@@ -20,7 +22,7 @@ router.get("/add", (req, res, next) => {
 })
 
 router.get("/:slug", async (req, res, next) => {
-  let page = await Page.findAll({
+  const page = await Page.findAll({
     where:{
       slug : req.params.slug
     }
@@ -32,12 +34,20 @@ router.get("/:slug", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   const page = new Page({
     title: req.body.title,
-    content: req.body.content,
-    status: req.body.active
+    content: req.body.content
   });
 
+
   try {
+    const user = await User.findOrCreate({
+      where: {
+        name: req.body.author,
+        email: req.body.email
+      }
+    })
+
     await page.save();
+    page.setAuthor(user[0]);
     res.redirect(`/wiki/${page.slug}`);
   } catch (error) { next(error) }
 })

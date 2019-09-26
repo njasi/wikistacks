@@ -28,7 +28,8 @@ const Page = db.define("Page",{
   },
   status: {
     type: Sequelize.ENUM('open', 'closed'),
-    allowNull: false
+    allowNull: false,
+    defaultValue: 'open'
   }
 })
 
@@ -54,8 +55,13 @@ const User = db.define("User",{
   }
 })
 
+Page.belongsTo(User, { as: 'author' });
 
 const init = async () => {
+  // DEV
+  // await db.sync({ force: true});
+
+  // PROD
   await db.sync();
 }
 
