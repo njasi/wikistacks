@@ -1,5 +1,8 @@
 const Sequelize = require('sequelize');
-const db = new Sequelize('postgres://localhost:5432/wikistack');
+const db = new Sequelize('postgres://localhost:5432/wikistack',{
+  logging: false
+});
+const Slugger = require("../utils/slug.js")
 
 const Page = db.define("Page",{
   title :{
@@ -27,6 +30,10 @@ const Page = db.define("Page",{
     type: Sequelize.ENUM('open', 'closed'),
     allowNull: false
   }
+})
+
+Page.beforeValidate((page)=>{
+  page.slug = Slugger(page.title);
 })
 
 const User = db.define("User",{
