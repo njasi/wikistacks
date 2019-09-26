@@ -10,7 +10,7 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({extended:false}));
 
 app.use('/wiki', routerWiki);
-app.use('/user', routerUser);
+app.use('/users', routerUser);
 
 app.get('/', (req, res, next) => {
   res.redirect('/wiki');

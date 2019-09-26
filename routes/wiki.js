@@ -11,7 +11,6 @@ then(() => {
 
 router.get("/", async (req,res,next)=>{
   const pages = await Page.findAll();
-  console.log('pages: ', pages);
   res.send(main(pages));
   next();
 })
@@ -27,7 +26,8 @@ router.get("/:slug", async (req, res, next) => {
       slug : req.params.slug
     }
   })
-  res.send(wikipage(page[0]));
+  const author = await User.findByPk(page[0].authorId);
+  res.send(wikipage(page[0],author));
   next()
 })
 
