@@ -1,16 +1,28 @@
 {
-  "name": "wikistack",
+  "name": "wikistacks",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "html-template-tag": "^3.2.0",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-    "start": "nodemon app.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./path/to/your/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/njasi/wikistacks.git"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.1",
-    "morgan": "^1.9.1"
-  }
+  "bugs": {
+    "url": "https://github.com/njasi/wikistacks/issues"
+  },
+  "homepage": "https://github.com/njasi/wikistacks#readme"
 }
