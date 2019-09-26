@@ -10,12 +10,10 @@ const Page = db.define("Page",{
     }
   },
   slug : {
-    title :{
-      type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true
-      }
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
     }
   },
   content: {
@@ -26,7 +24,8 @@ const Page = db.define("Page",{
     }
   },
   status: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.ENUM('open', 'closed'),
+    allowNull: false
   }
 })
 
@@ -42,14 +41,18 @@ const User = db.define("User",{
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      notEmpty: true
+      notEmpty: true,
+      isEmail: true
     }
   }
 })
 
 
+const init = async () => {
+  await db.sync();
+}
 
-db.sync()
+init();
 
 module.exports = {
   db, Page, User
